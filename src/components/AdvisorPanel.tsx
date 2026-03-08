@@ -1,8 +1,7 @@
 import { Brain, ShieldCheck, Target, BarChart3, AlertTriangle, ChevronRight } from "lucide-react";
-import type { StockAdvice } from "@/lib/api/stock";
 
 interface AdvisorPanelProps {
-  advice: StockAdvice;
+  advice: Record<string, any>;
 }
 
 function RecommendationBadge({ rec }: { rec: string }) {
@@ -22,6 +21,26 @@ function RecommendationBadge({ rec }: { rec: string }) {
 }
 
 export function AdvisorPanel({ advice }: AdvisorPanelProps) {
+  const strategy = advice.investment_strategy || {};
+  const entry = strategy.entry_strategy || {};
+  const exit = strategy.exit_strategy || {};
+  const sizing = strategy.position_sizing || {};
+  const risk = advice.risk_assessment || {};
+  const scenarios = advice.scenario_analysis || [];
+  const risks = risk.key_risks || [];
+  const mitigations = risk.risk_mitigation || [];
+
+  // Support both flat and nested strategy formats
+  const entryTiming = entry.timing || strategy.timing || "—";
+  const entryPriceRange = entry.price_range || strategy.entry_price_range || "—";
+  const entryAllocation = entry.allocation_percent;
+  const entryReasoning = entry.reasoning || strategy.reasoning || "";
+
+  const exitTarget = exit.target_price || strategy.target_price || "—";
+  const exitStopLoss = exit.stop_loss || strategy.stop_loss || "—";
+  const exitTimeline = exit.timeline || strategy.timeline || "—";
+  const exitReasoning = exit.reasoning || "";
+
   return (
     <div className="glass-card p-6 animate-fade-in-up">
       <div className="flex items-center gap-2 mb-4">
@@ -47,7 +66,7 @@ export function AdvisorPanel({ advice }: AdvisorPanelProps) {
             <Target className="h-4 w-4 text-primary" />
             <span className="text-xs font-mono font-semibold">STRATEGY</span>
           </div>
-          <p className="text-sm text-foreground/90 mb-3">{advice.investment_strategy.action}</p>
+          <p className="text-sm text-foreground/90 mb-3">{strategy.action || "—"}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* Entry */}
@@ -56,18 +75,20 @@ export function AdvisorPanel({ advice }: AdvisorPanelProps) {
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
                   <span className="text-muted-foreground">Timing</span>
-                  <span className="font-mono">{advice.investment_strategy.entry_strategy.timing}</span>
+                  <span className="font-mono">{entryTiming}</span>
                 </div>
                 <div className="flex justify-between text-xs">
                   <span className="text-muted-foreground">Price Range</span>
-                  <span className="font-mono">{advice.investment_strategy.entry_strategy.price_range}</span>
+                  <span className="font-mono">{entryPriceRange}</span>
                 </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-muted-foreground">Allocation</span>
-                  <span className="font-mono">{advice.investment_strategy.entry_strategy.allocation_percent}%</span>
-                </div>
+                {entryAllocation != null && (
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground">Allocation</span>
+                    <span className="font-mono">{entryAllocation}%</span>
+                  </div>
+                )}
               </div>
-              <p className="text-[10px] text-muted-foreground mt-2">{advice.investment_strategy.entry_strategy.reasoning}</p>
+              {entryReasoning && <p className="text-[10px] text-muted-foreground mt-2">{entryReasoning}</p>}
             </div>
 
             {/* Exit */}
@@ -76,114 +97,124 @@ export function AdvisorPanel({ advice }: AdvisorPanelProps) {
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
                   <span className="text-muted-foreground">Target</span>
-                  <span className="font-mono">{advice.investment_strategy.exit_strategy.target_price}</span>
+                  <span className="font-mono">{exitTarget}</span>
                 </div>
                 <div className="flex justify-between text-xs">
                   <span className="text-muted-foreground">Stop Loss</span>
-                  <span className="font-mono">{advice.investment_strategy.exit_strategy.stop_loss}</span>
+                  <span className="font-mono">{exitStopLoss}</span>
                 </div>
                 <div className="flex justify-between text-xs">
                   <span className="text-muted-foreground">Timeline</span>
-                  <span className="font-mono">{advice.investment_strategy.exit_strategy.timeline}</span>
+                  <span className="font-mono">{exitTimeline}</span>
                 </div>
               </div>
-              <p className="text-[10px] text-muted-foreground mt-2">{advice.investment_strategy.exit_strategy.reasoning}</p>
+              {exitReasoning && <p className="text-[10px] text-muted-foreground mt-2">{exitReasoning}</p>}
             </div>
           </div>
 
-          {/* Position Sizing */}
-          <div className="mt-3 bg-muted/30 rounded-md p-3">
-            <div className="text-[10px] font-mono text-accent mb-2">▸ POSITION SIZE</div>
-            <div className="grid grid-cols-3 gap-2 text-center">
-              <div>
-                <div className="text-[10px] text-muted-foreground">Shares</div>
-                <div className="text-sm font-mono font-semibold">{advice.investment_strategy.position_sizing.recommended_shares}</div>
-              </div>
-              <div>
-                <div className="text-[10px] text-muted-foreground">Amount</div>
-                <div className="text-sm font-mono font-semibold">{advice.investment_strategy.position_sizing.dollar_amount}</div>
-              </div>
-              <div>
-                <div className="text-[10px] text-muted-foreground">Portfolio %</div>
-                <div className="text-sm font-mono font-semibold">{advice.investment_strategy.position_sizing.portfolio_allocation}</div>
+          {/* Position Sizing - only show if data exists */}
+          {(sizing.recommended_shares || sizing.dollar_amount || sizing.portfolio_allocation) && (
+            <div className="mt-3 bg-muted/30 rounded-md p-3">
+              <div className="text-[10px] font-mono text-accent mb-2">▸ POSITION SIZE</div>
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div>
+                  <div className="text-[10px] text-muted-foreground">Shares</div>
+                  <div className="text-sm font-mono font-semibold">{sizing.recommended_shares || "—"}</div>
+                </div>
+                <div>
+                  <div className="text-[10px] text-muted-foreground">Amount</div>
+                  <div className="text-sm font-mono font-semibold">{sizing.dollar_amount || "—"}</div>
+                </div>
+                <div>
+                  <div className="text-[10px] text-muted-foreground">Portfolio %</div>
+                  <div className="text-sm font-mono font-semibold">{sizing.portfolio_allocation || "—"}</div>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Scenario Analysis */}
-        <div className="bg-muted/20 rounded-md p-4 border border-border/30">
-          <div className="flex items-center gap-2 mb-3">
-            <BarChart3 className="h-4 w-4 text-accent" />
-            <span className="text-xs font-mono font-semibold">SCENARIOS</span>
-          </div>
-          <div className="space-y-2">
-            {advice.scenario_analysis.map((s, i) => (
-              <div key={i} className="flex items-center gap-3 bg-muted/20 rounded-md p-2">
-                <ChevronRight className="h-3 w-3 text-muted-foreground shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-medium">{s.scenario}</span>
-                    <span className="text-[10px] text-muted-foreground">{s.probability}% prob</span>
+        {scenarios.length > 0 && (
+          <div className="bg-muted/20 rounded-md p-4 border border-border/30">
+            <div className="flex items-center gap-2 mb-3">
+              <BarChart3 className="h-4 w-4 text-accent" />
+              <span className="text-xs font-mono font-semibold">SCENARIOS</span>
+            </div>
+            <div className="space-y-2">
+              {scenarios.map((s: any, i: number) => (
+                <div key={i} className="flex items-center gap-3 bg-muted/20 rounded-md p-2">
+                  <ChevronRight className="h-3 w-3 text-muted-foreground shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono font-medium">{s.scenario}</span>
+                      <span className="text-[10px] text-muted-foreground">{s.probability}% prob</span>
+                    </div>
+                    {s.outcome && <p className="text-[10px] text-muted-foreground truncate">{s.outcome}</p>}
                   </div>
-                  <p className="text-[10px] text-muted-foreground truncate">{s.outcome}</p>
+                  <span className={`text-xs font-mono font-bold shrink-0 ${
+                    String(s.potential_return).includes("-") ? "text-signal-down" : "text-signal-up"
+                  }`}>{s.potential_return}</span>
                 </div>
-                <span className={`text-xs font-mono font-bold shrink-0 ${
-                  s.potential_return.includes("-") ? "signal-down" : "signal-up"
-                }`}>{s.potential_return}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Risk Assessment */}
-        <div className="bg-muted/20 rounded-md p-4 border border-border/30">
-          <div className="flex items-center gap-2 mb-3">
-            <ShieldCheck className="h-4 w-4 text-signal-neutral" />
-            <span className="text-xs font-mono font-semibold">RISK ASSESSMENT</span>
-            <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded capitalize ${
-              advice.risk_assessment.overall_risk === "low" ? "bg-signal-up/10 text-signal-up" :
-              advice.risk_assessment.overall_risk === "high" || advice.risk_assessment.overall_risk === "very_high"
-                ? "bg-signal-down/10 text-signal-down" : "bg-signal-neutral/10 text-signal-neutral"
-            }`}>{advice.risk_assessment.overall_risk}</span>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <div className="text-[10px] font-mono text-muted-foreground mb-1">RISKS</div>
-              <ul className="space-y-1">
-                {advice.risk_assessment.key_risks.map((r, i) => (
-                  <li key={i} className="text-xs flex items-start gap-1">
-                    <AlertTriangle className="h-3 w-3 text-signal-down mt-0.5 shrink-0" />
-                    {r}
-                  </li>
-                ))}
-              </ul>
+        {risks.length > 0 && (
+          <div className="bg-muted/20 rounded-md p-4 border border-border/30">
+            <div className="flex items-center gap-2 mb-3">
+              <ShieldCheck className="h-4 w-4 text-signal-neutral" />
+              <span className="text-xs font-mono font-semibold">RISK ASSESSMENT</span>
+              <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded capitalize ${
+                risk.overall_risk === "low" ? "bg-signal-up/10 text-signal-up" :
+                risk.overall_risk === "high" || risk.overall_risk === "very_high"
+                  ? "bg-signal-down/10 text-signal-down" : "bg-signal-neutral/10 text-signal-neutral"
+              }`}>{risk.overall_risk}</span>
             </div>
-            <div>
-              <div className="text-[10px] font-mono text-muted-foreground mb-1">MITIGATION</div>
-              <ul className="space-y-1">
-                {advice.risk_assessment.risk_mitigation.map((m, i) => (
-                  <li key={i} className="text-xs flex items-start gap-1">
-                    <ShieldCheck className="h-3 w-3 text-signal-up mt-0.5 shrink-0" />
-                    {m}
-                  </li>
-                ))}
-              </ul>
+            <div className={mitigations.length > 0 ? "grid grid-cols-2 gap-3" : ""}>
+              <div>
+                <div className="text-[10px] font-mono text-muted-foreground mb-1">RISKS</div>
+                <ul className="space-y-1">
+                  {risks.map((r: string, i: number) => (
+                    <li key={i} className="text-xs flex items-start gap-1">
+                      <AlertTriangle className="h-3 w-3 text-signal-down mt-0.5 shrink-0" />
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {mitigations.length > 0 && (
+                <div>
+                  <div className="text-[10px] font-mono text-muted-foreground mb-1">MITIGATION</div>
+                  <ul className="space-y-1">
+                    {mitigations.map((m: string, i: number) => (
+                      <li key={i} className="text-xs flex items-start gap-1">
+                        <ShieldCheck className="h-3 w-3 text-signal-up mt-0.5 shrink-0" />
+                        {m}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Detailed Reasoning */}
-      <div className="mb-4">
-        <div className="text-xs font-mono text-muted-foreground mb-2">ANALYSIS</div>
-        <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-line">{advice.detailed_reasoning}</p>
-      </div>
+      {advice.detailed_reasoning && (
+        <div className="mb-4">
+          <div className="text-xs font-mono text-muted-foreground mb-2">ANALYSIS</div>
+          <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-line">{advice.detailed_reasoning}</p>
+        </div>
+      )}
 
       {/* Disclaimer */}
       <div className="bg-signal-neutral/5 border border-signal-neutral/20 rounded-md p-3 mt-4">
         <p className="text-[10px] text-signal-neutral leading-relaxed">
-          ⚠️ {advice.disclaimer || "This is AI-generated analysis and not financial advice. Consult a licensed financial advisor before making investment decisions. Past performance does not guarantee future results."}
+          ⚠️ {advice.disclaimer || "This is AI-generated analysis and not financial advice. You should consult with a licensed financial advisor before making any investment decisions."}
         </p>
       </div>
     </div>
