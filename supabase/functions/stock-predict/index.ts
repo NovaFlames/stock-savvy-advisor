@@ -19,6 +19,7 @@ All monetary values must be in Indian Rupees (₹/INR). When given a stock ticke
 {
   "ticker": "SYMBOL",
   "company_name": "Full Company Name",
+  "current_price": number (estimated current market price in INR),
   "current_analysis": {
     "trend": "bullish" | "bearish" | "neutral",
     "confidence": 0-100,
@@ -104,7 +105,7 @@ Be realistic and balanced. Include disclaimers about market uncertainty. Base an
                   risk_level: { type: "string", enum: ["low", "medium", "high"] },
                   summary: { type: "string" },
                 },
-                required: ["ticker", "company_name", "current_analysis", "predictions", "technical_indicators", "risk_level", "summary"],
+                required: ["ticker", "company_name", "current_price", "current_analysis", "predictions", "technical_indicators", "risk_level", "summary"],
               },
             },
           },

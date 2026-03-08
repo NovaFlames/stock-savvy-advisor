@@ -69,6 +69,7 @@ serve(async (req) => {
 
 Return JSON with these fields:
 - ticker, overall_recommendation (strong_buy/buy/hold/sell/strong_sell), confidence_score (0-100)
+- buy_favorability: { score (0-100), label (Highly Favorable/Favorable/Neutral/Unfavorable/Highly Unfavorable), reasoning (1-2 sentences why) }
 - investment_strategy: { action, entry_price_range, stop_loss, target_price, timeline, reasoning }
 - risk_assessment: { overall_risk (low/medium/high), key_risks (array of 2-3 strings) }
 - scenario_analysis: array of 3 objects with { scenario, probability, potential_return }
