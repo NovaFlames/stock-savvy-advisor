@@ -153,6 +153,16 @@ const Index = () => {
           </div>
         )}
 
+        {/* Watchlist */}
+        <div className="mb-6">
+          <WatchlistPanel
+            onAnalyze={(ticker) => handleSearch(ticker)}
+            currentTicker={prediction?.ticker}
+            currentCompany={prediction?.company_name}
+            currentPrice={prediction?.current_price}
+          />
+        </div>
+
         {/* History Panel */}
         <div className="mb-6">
           <HistoryPanel
