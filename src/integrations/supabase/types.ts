@@ -14,7 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      watchlist: {
+        Row: {
+          added_at: string
+          company_name: string | null
+          current_price: number | null
+          id: string
+          last_checked_at: string | null
+          ticker: string
+          user_id: string
+        }
+        Insert: {
+          added_at?: string
+          company_name?: string | null
+          current_price?: number | null
+          id?: string
+          last_checked_at?: string | null
+          ticker: string
+          user_id: string
+        }
+        Update: {
+          added_at?: string
+          company_name?: string | null
+          current_price?: number | null
+          id?: string
+          last_checked_at?: string | null
+          ticker?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
