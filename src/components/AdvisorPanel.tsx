@@ -59,6 +59,37 @@ export function AdvisorPanel({ advice }: AdvisorPanelProps) {
         <RecommendationBadge rec={advice.overall_recommendation} />
       </div>
 
+      {/* Buy Favorability */}
+      {advice.buy_favorability && (
+        <div className="mb-6 bg-muted/20 rounded-md p-4 border border-border/30">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-mono font-semibold">BUY FAVORABILITY</span>
+            <span className={`text-sm font-mono font-bold ${
+              advice.buy_favorability.score >= 70 ? "text-signal-up" :
+              advice.buy_favorability.score >= 40 ? "text-signal-neutral" : "text-signal-down"
+            }`}>{advice.buy_favorability.score}/100</span>
+          </div>
+          <div className="h-2 rounded-full bg-muted mb-2">
+            <div
+              className={`h-full rounded-full transition-all duration-700 ${
+                advice.buy_favorability.score >= 70 ? "bg-signal-up" :
+                advice.buy_favorability.score >= 40 ? "bg-signal-neutral" : "bg-signal-down"
+              }`}
+              style={{ width: `${advice.buy_favorability.score}%` }}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <span className={`text-xs font-mono font-semibold ${
+              advice.buy_favorability.score >= 70 ? "text-signal-up" :
+              advice.buy_favorability.score >= 40 ? "text-signal-neutral" : "text-signal-down"
+            }`}>{advice.buy_favorability.label}</span>
+          </div>
+          {advice.buy_favorability.reasoning && (
+            <p className="text-xs text-muted-foreground mt-2">{advice.buy_favorability.reasoning}</p>
+          )}
+        </div>
+      )}
+
       {/* Strategy */}
       <div className="space-y-4 mb-6">
         <div className="bg-muted/20 rounded-md p-4 border border-border/30">

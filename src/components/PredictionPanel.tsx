@@ -47,7 +47,12 @@ export function PredictionPanel({ prediction }: PredictionPanelProps) {
           <p className="text-sm text-muted-foreground">{prediction.company_name}</p>
         </div>
         <div className="text-right">
-          <span className={`text-lg font-bold font-mono ${trendColor} capitalize`}>
+          {prediction.current_price && (
+            <div className="text-2xl font-bold font-mono text-foreground">
+              ₹{prediction.current_price.toLocaleString("en-IN")}
+            </div>
+          )}
+          <span className={`text-sm font-bold font-mono ${trendColor} capitalize`}>
             {prediction.current_analysis.trend}
           </span>
           <div className="text-xs text-muted-foreground mt-1">

@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 export interface StockPrediction {
   ticker: string;
   company_name: string;
+  current_price?: number;
   current_analysis: {
     trend: "bullish" | "bearish" | "neutral";
     confidence: number;
