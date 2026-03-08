@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import { StockSearch } from "@/components/StockSearch";
 import { PredictionPanel } from "@/components/PredictionPanel";
 import { NewsPanel } from "@/components/NewsPanel";
@@ -7,10 +8,12 @@ import { AdvisorPanel } from "@/components/AdvisorPanel";
 import { WorkflowStatus, getWorkflowSteps } from "@/components/WorkflowStatus";
 import { HistoryPanel } from "@/components/HistoryPanel";
 import { CompareModal } from "@/components/CompareModal";
+import { WatchlistPanel } from "@/components/WatchlistPanel";
 import { predictStock, searchStockNews, getStockAdvice } from "@/lib/api/stock";
 import type { StockPrediction, StockNews } from "@/lib/api/stock";
 import { saveAnalysis, type AnalysisRecord } from "@/lib/history";
-import { Activity } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { Activity, LogIn, LogOut, User } from "lucide-react";
 
 type StepStatus = "pending" | "running" | "done" | "error";
 
