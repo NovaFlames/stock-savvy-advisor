@@ -5,8 +5,11 @@ import { PredictionPanel } from "@/components/PredictionPanel";
 import { NewsPanel } from "@/components/NewsPanel";
 import { AdvisorPanel } from "@/components/AdvisorPanel";
 import { WorkflowStatus, getWorkflowSteps } from "@/components/WorkflowStatus";
+import { HistoryPanel } from "@/components/HistoryPanel";
+import { CompareModal } from "@/components/CompareModal";
 import { predictStock, searchStockNews, getStockAdvice } from "@/lib/api/stock";
-import type { StockPrediction, StockNews, StockAdvice } from "@/lib/api/stock";
+import type { StockPrediction, StockNews } from "@/lib/api/stock";
+import { saveAnalysis, type AnalysisRecord } from "@/lib/history";
 import { Activity } from "lucide-react";
 
 type StepStatus = "pending" | "running" | "done" | "error";
@@ -14,11 +17,14 @@ type StepStatus = "pending" | "running" | "done" | "error";
 const Index = () => {
   const [prediction, setPrediction] = useState<StockPrediction | null>(null);
   const [news, setNews] = useState<StockNews | null>(null);
-  const [advice, setAdvice] = useState<StockAdvice | null>(null);
+  const [advice, setAdvice] = useState<Record<string, any> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [predictStatus, setPredictStatus] = useState<StepStatus>("pending");
   const [newsStatus, setNewsStatus] = useState<StepStatus>("pending");
   const [advisorStatus, setAdvisorStatus] = useState<StepStatus>("pending");
+  const [historyRefresh, setHistoryRefresh] = useState(0);
+  const [compareA, setCompareA] = useState<AnalysisRecord | null>(null);
+  const [compareB, setCompareB] = useState<AnalysisRecord | null>(null);
 
   const handleSearch = useCallback(async (ticker: string, amount?: number) => {
     setIsLoading(true);
@@ -26,12 +32,10 @@ const Index = () => {
     setNews(null);
     setAdvice(null);
     setPredictStatus("running");
-    setNewsStatus("pending");
+    setNewsStatus("running");
     setAdvisorStatus("pending");
 
     try {
-      // Step 1 & 2: Run prediction and news in parallel
-      setNewsStatus("running");
       const [predResult, newsResult] = await Promise.all([
         predictStock(ticker).then((r) => { setPredictStatus("done"); return r; }).catch((e) => { setPredictStatus("error"); throw e; }),
         searchStockNews(ticker).then((r) => { setNewsStatus("done"); return r; }).catch((e) => { setNewsStatus("error"); throw e; }),
@@ -40,11 +44,14 @@ const Index = () => {
       setPrediction(predResult);
       setNews(newsResult);
 
-      // Step 3: Advisor agent synthesizes both
       setAdvisorStatus("running");
       const adviceResult = await getStockAdvice(ticker, predResult, newsResult, amount);
       setAdvisorStatus("done");
       setAdvice(adviceResult);
+
+      // Save to history
+      saveAnalysis(predResult, newsResult, adviceResult);
+      setHistoryRefresh((k) => k + 1);
 
       toast.success(`Analysis complete for ${ticker}`);
     } catch (error) {
@@ -53,6 +60,21 @@ const Index = () => {
     } finally {
       setIsLoading(false);
     }
+  }, []);
+
+  const handleLoadHistory = useCallback((record: AnalysisRecord) => {
+    setPrediction(record.prediction);
+    setNews(record.news);
+    setAdvice(record.advice);
+    setPredictStatus("done");
+    setNewsStatus("done");
+    setAdvisorStatus("done");
+    toast.info(`Loaded ${record.ticker} analysis`);
+  }, []);
+
+  const handleCompare = useCallback((a: AnalysisRecord, b: AnalysisRecord) => {
+    setCompareA(a);
+    setCompareB(b);
   }, []);
 
   const showWorkflow = predictStatus !== "pending" || newsStatus !== "pending" || advisorStatus !== "pending";
@@ -89,19 +111,25 @@ const Index = () => {
 
         {/* Results Grid */}
         {(prediction || news || advice) && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left column: Prediction + News */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <div className="space-y-6">
               {prediction && <PredictionPanel prediction={prediction} />}
               {news && <NewsPanel news={news} />}
             </div>
-
-            {/* Right column: Advisor */}
             <div>
               {advice && <AdvisorPanel advice={advice} />}
             </div>
           </div>
         )}
+
+        {/* History Panel */}
+        <div className="mb-6">
+          <HistoryPanel
+            onLoad={handleLoadHistory}
+            onCompare={handleCompare}
+            refreshKey={historyRefresh}
+          />
+        </div>
 
         {/* Empty State */}
         {!prediction && !isLoading && (
@@ -116,6 +144,11 @@ const Index = () => {
           </div>
         )}
       </div>
+
+      {/* Compare Modal */}
+      {compareA && compareB && (
+        <CompareModal a={compareA} b={compareB} onClose={() => { setCompareA(null); setCompareB(null); }} />
+      )}
     </div>
   );
 };
