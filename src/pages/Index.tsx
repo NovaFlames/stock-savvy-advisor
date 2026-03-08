@@ -90,12 +90,38 @@ const Index = () => {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <header className="mb-8 animate-fade-in-up">
-          <div className="flex items-center gap-3 mb-2">
-            <Activity className="h-7 w-7 text-primary" />
-            <h1 className="text-2xl font-bold font-mono tracking-tight">
-              STOCK<span className="text-primary">ORACLE</span>
-            </h1>
-            <span className="text-[10px] font-mono text-muted-foreground bg-secondary/50 px-2 py-0.5 rounded">v1.0</span>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-3">
+              <Activity className="h-7 w-7 text-primary" />
+              <h1 className="text-2xl font-bold font-mono tracking-tight">
+                STOCK<span className="text-primary">ORACLE</span>
+              </h1>
+              <span className="text-[10px] font-mono text-muted-foreground bg-secondary/50 px-2 py-0.5 rounded">v1.0</span>
+            </div>
+            <div className="flex items-center gap-2">
+              {user ? (
+                <>
+                  <span className="text-xs text-muted-foreground font-mono hidden sm:inline truncate max-w-[150px]">
+                    {user.email}
+                  </span>
+                  <button
+                    onClick={signOut}
+                    className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground font-mono py-1.5 px-2.5 rounded-md hover:bg-muted/50 transition-colors"
+                  >
+                    <LogOut className="h-3.5 w-3.5" />
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => navigate("/auth")}
+                  className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground text-xs font-mono font-semibold py-1.5 px-3 rounded-md hover:bg-primary/90 transition-colors"
+                >
+                  <LogIn className="h-3.5 w-3.5" />
+                  Sign In
+                </button>
+              )}
+            </div>
           </div>
           <p className="text-sm text-muted-foreground">
             AI-powered stock analysis with prediction model, news intelligence, and advisory agent
