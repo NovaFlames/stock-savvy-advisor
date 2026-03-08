@@ -1,1 +1,10 @@
 project_id = "sluylcnkffpkldklmgeq"
+
+[functions.stock-predict]
+verify_jwt = false
+
+[functions.stock-news]
+verify_jwt = false
+
+[functions.stock-advisor]
+verify_jwt = false
