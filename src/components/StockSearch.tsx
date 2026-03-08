@@ -8,7 +8,7 @@ interface StockSearchProps {
   isLoading: boolean;
 }
 
-const POPULAR_TICKERS = ["AAPL", "MSFT", "GOOGL", "TSLA", "AMZN", "NVDA", "META"];
+const POPULAR_TICKERS = ["RELIANCE", "TCS", "INFY", "HDFCBANK", "ICICIBANK", "WIPRO", "SBIN", "AAPL", "NVDA", "TSLA"];
 
 export function StockSearch({ onSearch, isLoading }: StockSearchProps) {
   const [ticker, setTicker] = useState("");
