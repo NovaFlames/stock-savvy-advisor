@@ -39,7 +39,7 @@ export function ForecastChart({ prediction }: ForecastChartProps) {
     }));
 
   const maxAbs = Math.max(...data.map((d) => Math.abs(d.change)), 2);
-  const yDomain = [-(maxAbs * 1.3), maxAbs * 1.3];
+  const yDomain = [Math.floor(-(maxAbs * 1.3)), Math.ceil(maxAbs * 1.3)];
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (!active || !payload?.length) return null;
@@ -103,7 +103,7 @@ export function ForecastChart({ prediction }: ForecastChartProps) {
                 tick={{ fontSize: 10, fill: "hsl(215, 15%, 55%)", fontFamily: "JetBrains Mono" }}
                 axisLine={false}
                 tickLine={false}
-                tickFormatter={(v: number) => `${v > 0 ? "+" : ""}${v}%`}
+                tickFormatter={(v: number) => `${v > 0 ? "+" : ""}${Math.round(v * 10) / 10}%`}
               />
               <Tooltip content={<CustomTooltip />} />
               <ReferenceLine y={0} stroke="hsl(215, 15%, 55%)" strokeDasharray="3 3" strokeOpacity={0.5} />
@@ -141,7 +141,7 @@ export function ForecastChart({ prediction }: ForecastChartProps) {
                 tick={{ fontSize: 10, fill: "hsl(215, 15%, 55%)", fontFamily: "JetBrains Mono" }}
                 axisLine={false}
                 tickLine={false}
-                tickFormatter={(v: number) => `${v > 0 ? "+" : ""}${v}%`}
+                tickFormatter={(v: number) => `${v > 0 ? "+" : ""}${Math.round(v * 10) / 10}%`}
               />
               <Tooltip content={<CustomTooltip />} />
               <ReferenceLine y={0} stroke="hsl(215, 15%, 55%)" strokeDasharray="3 3" strokeOpacity={0.5} />
