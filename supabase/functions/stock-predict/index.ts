@@ -69,6 +69,7 @@ Be realistic and balanced. Include disclaimers about market uncertainty. Base an
                 properties: {
                   ticker: { type: "string" },
                   company_name: { type: "string" },
+                  current_price: { type: "number", description: "Estimated current market price in INR" },
                   current_analysis: {
                     type: "object",
                     properties: {
