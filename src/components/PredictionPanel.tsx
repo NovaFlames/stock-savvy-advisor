@@ -1,5 +1,6 @@
 import { TrendingUp, TrendingDown, Minus, Activity, BarChart3, Target } from "lucide-react";
 import type { StockPrediction } from "@/lib/api/stock";
+import { ForecastChart } from "@/components/ForecastChart";
 
 interface PredictionPanelProps {
   prediction: StockPrediction;
@@ -115,6 +116,11 @@ export function PredictionPanel({ prediction }: PredictionPanelProps) {
           prediction.risk_level === "low" ? "signal-up" :
           prediction.risk_level === "high" ? "signal-down" : "signal-neutral"
         }`}>{prediction.risk_level}</span>
+      </div>
+
+      {/* Forecast Chart */}
+      <div className="mt-4">
+        <ForecastChart prediction={prediction} />
       </div>
 
       {/* Summary */}
