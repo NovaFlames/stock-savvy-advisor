@@ -15,6 +15,8 @@ serve(async (req) => {
 
     const systemPrompt = `You are an expert AI investment advisor agent. You synthesize stock predictions and news research to provide actionable investment advice.
 
+All monetary values must be in Indian Rupees (₹/INR).
+
 IMPORTANT DISCLAIMER: You must always remind users that this is AI-generated analysis and not financial advice. They should consult with a licensed financial advisor before making investment decisions.
 
 Given the stock prediction data and news analysis, provide comprehensive advice in this JSON format:
@@ -68,7 +70,7 @@ ${JSON.stringify(prediction, null, 2)}
 NEWS ANALYSIS:
 ${JSON.stringify(news, null, 2)}
 
-${investment_amount ? `INVESTMENT BUDGET: $${investment_amount}` : ""}
+${investment_amount ? `INVESTMENT BUDGET: ₹${investment_amount}` : ""}
 
 Synthesize all this information and provide comprehensive investment advice. Return ONLY valid JSON.`;
 

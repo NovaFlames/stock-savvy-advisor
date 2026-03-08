@@ -59,11 +59,11 @@ export function PredictionPanel({ prediction }: PredictionPanelProps) {
       <div className="grid grid-cols-2 gap-3 mb-6">
         <div className="bg-muted/30 rounded-md p-3">
           <div className="text-xs text-muted-foreground mb-1">Support</div>
-          <div className="font-mono font-semibold text-signal-up">${prediction.current_analysis.support_level}</div>
+          <div className="font-mono font-semibold text-signal-up">₹{prediction.current_analysis.support_level}</div>
         </div>
         <div className="bg-muted/30 rounded-md p-3">
           <div className="text-xs text-muted-foreground mb-1">Resistance</div>
-          <div className="font-mono font-semibold text-signal-down">${prediction.current_analysis.resistance_level}</div>
+          <div className="font-mono font-semibold text-signal-down">₹{prediction.current_analysis.resistance_level}</div>
         </div>
       </div>
 
