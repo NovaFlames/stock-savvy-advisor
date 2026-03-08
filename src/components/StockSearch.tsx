@@ -46,7 +46,7 @@ export function StockSearch({ onSearch, isLoading }: StockSearchProps) {
           </div>
           <Input
             type="number"
-            placeholder="Budget ($)"
+            placeholder="Budget (₹)"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             className="w-32 font-mono bg-muted/50 border-border/50 focus:border-primary/50"

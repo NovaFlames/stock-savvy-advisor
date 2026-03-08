@@ -15,7 +15,7 @@ serve(async (req) => {
 
     const systemPrompt = `You are a quantitative stock analysis AI. You analyze stocks using technical analysis, fundamental analysis, and market sentiment patterns.
 
-When given a stock ticker, provide a detailed prediction analysis in the following JSON format:
+All monetary values must be in Indian Rupees (₹/INR). When given a stock ticker, provide a detailed prediction analysis in the following JSON format:
 {
   "ticker": "SYMBOL",
   "company_name": "Full Company Name",
