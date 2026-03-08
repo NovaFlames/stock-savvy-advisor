@@ -39,7 +39,7 @@ export function ForecastChart({ prediction }: ForecastChartProps) {
     }));
 
   const maxAbs = Math.max(...data.map((d) => Math.abs(d.change)), 2);
-  const yDomain = [-(maxAbs * 1.3), maxAbs * 1.3];
+  const yDomain = [Math.floor(-(maxAbs * 1.3)), Math.ceil(maxAbs * 1.3)];
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (!active || !payload?.length) return null;
