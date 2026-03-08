@@ -18,6 +18,8 @@ import { Activity, LogIn, LogOut, User } from "lucide-react";
 type StepStatus = "pending" | "running" | "done" | "error";
 
 const Index = () => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [prediction, setPrediction] = useState<StockPrediction | null>(null);
   const [news, setNews] = useState<StockNews | null>(null);
   const [advice, setAdvice] = useState<Record<string, any> | null>(null);
