@@ -82,7 +82,7 @@ export function WatchlistPanel({ onAnalyze, currentTicker, currentCompany, curre
       <div className="glass-card p-6 animate-fade-in-up">
         <div className="flex items-center gap-2 mb-4">
           <Star className="h-5 w-5 text-signal-neutral" />
-          <h3 className="font-semibold font-mono text-sm">WATCHLIST</h3>
+          <h2 className="font-semibold font-mono text-sm">WATCHLIST</h2>
         </div>
         <div className="text-center py-8">
           <Star className="h-10 w-10 text-muted-foreground/30 mx-auto mb-3" />
@@ -104,7 +104,7 @@ export function WatchlistPanel({ onAnalyze, currentTicker, currentCompany, curre
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Star className="h-5 w-5 text-signal-neutral" />
-          <h3 className="font-semibold font-mono text-sm">WATCHLIST</h3>
+          <h2 className="font-semibold font-mono text-sm">WATCHLIST</h2>
           <span className="text-[10px] font-mono text-muted-foreground bg-secondary/50 px-1.5 py-0.5 rounded">
             {items.length}
           </span>

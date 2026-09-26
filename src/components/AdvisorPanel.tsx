@@ -45,13 +45,13 @@ export function AdvisorPanel({ advice }: AdvisorPanelProps) {
     <div className="glass-card p-6 animate-fade-in-up">
       <div className="flex items-center gap-2 mb-4">
         <Brain className="h-5 w-5 text-primary" />
-        <h3 className="font-semibold font-mono text-sm">AI ADVISOR AGENT</h3>
+        <h2 className="font-semibold font-mono text-sm">AI ADVISOR AGENT</h2>
       </div>
 
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-xl font-bold font-mono">{advice.ticker}</h2>
+          <h3 className="text-xl font-bold font-mono">{advice.ticker}</h3>
           <div className="text-xs text-muted-foreground mt-1">
             Confidence: {advice.confidence_score}%
           </div>

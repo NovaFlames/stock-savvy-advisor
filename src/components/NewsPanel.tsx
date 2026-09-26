@@ -32,7 +32,7 @@ export function NewsPanel({ news }: NewsPanelProps) {
     <div className="glass-card p-6 animate-fade-in-up glow-accent">
       <div className="flex items-center gap-2 mb-4">
         <Newspaper className="h-5 w-5 text-accent" />
-        <h3 className="font-semibold font-mono text-sm">NEWS INTELLIGENCE</h3>
+        <h2 className="font-semibold font-mono text-sm">NEWS INTELLIGENCE</h2>
         <SentimentBadge sentiment={news.overall_sentiment} />
       </div>
 
@@ -41,7 +41,7 @@ export function NewsPanel({ news }: NewsPanelProps) {
         {news.news_items.map((item, i) => (
           <div key={i} className="bg-muted/20 rounded-md p-3 border border-border/30">
             <div className="flex items-start justify-between gap-2 mb-1">
-              <h4 className="text-sm font-medium leading-tight">{item.title}</h4>
+              <h3 className="text-sm font-medium leading-tight">{item.title}</h3>
               <div className="flex gap-1 shrink-0">
                 <SentimentBadge sentiment={item.sentiment} />
                 <ImpactBadge level={item.impact_level} />
