@@ -155,6 +155,7 @@ export function HistoryPanel({ onLoad, onCompare, refreshKey }: HistoryPanelProp
                 </Button>
                 <button
                   onClick={(e) => { e.stopPropagation(); handleDelete(record.id); }}
+                  aria-label={`Delete ${record.ticker} analysis`}
                   className="p-1 rounded hover:bg-destructive/20 text-muted-foreground hover:text-destructive transition-colors"
                 >
                   <X className="h-3 w-3" />

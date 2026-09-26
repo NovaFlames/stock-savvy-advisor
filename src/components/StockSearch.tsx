@@ -140,7 +140,7 @@ export function StockSearch({ onSearch, isLoading }: StockSearchProps) {
             className="w-32 font-mono bg-muted/50 border-border/50 focus:border-primary/50"
             disabled={isLoading}
           />
-          <Button type="submit" disabled={isLoading || !query.trim()}>
+          <Button type="submit" disabled={isLoading || !query.trim()} aria-label={isLoading ? "Analyzing stock" : "Analyze stock"}>
             {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Analyze"}
           </Button>
         </div>
