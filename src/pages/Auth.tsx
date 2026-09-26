@@ -1,3 +1,4 @@
+import { Seo } from "@/components/Seo";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -60,12 +61,14 @@ const Auth = () => {
   return (
     <div className="min-h-screen bg-background terminal-grid flex items-center justify-center px-4">
       <div className="w-full max-w-md">
+        <Seo title={isLogin ? "Sign In - StockOracle" : "Create Account - StockOracle"} description="Sign in to StockOracle to save stocks to your watchlist and track their prices over time." path="/auth" />
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-3">
             <Activity className="h-7 w-7 text-primary" />
             <h1 className="text-2xl font-bold font-mono tracking-tight">
               STOCK<span className="text-primary">ORACLE</span>
+                <span className="sr-only"> — AI-Powered Stock Analysis</span>
             </h1>
           </div>
           <p className="text-sm text-muted-foreground">
