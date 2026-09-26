@@ -79,7 +79,7 @@ export function HistoryPanel({ onLoad, onCompare, refreshKey }: HistoryPanelProp
       <div className="glass-card p-6 animate-fade-in-up">
         <div className="flex items-center gap-2 mb-3">
           <History className="h-5 w-5 text-primary" />
-          <h3 className="font-semibold font-mono text-sm">ANALYSIS HISTORY</h3>
+          <h2 className="font-semibold font-mono text-sm">ANALYSIS HISTORY</h2>
         </div>
         <p className="text-xs text-muted-foreground text-center py-6">
           No analyses saved yet. Run an analysis to see it here.
@@ -92,7 +92,7 @@ export function HistoryPanel({ onLoad, onCompare, refreshKey }: HistoryPanelProp
     <div className="glass-card p-6 animate-fade-in-up">
       <div className="flex items-center gap-2 mb-4">
         <History className="h-5 w-5 text-primary" />
-        <h3 className="font-semibold font-mono text-sm">ANALYSIS HISTORY</h3>
+        <h2 className="font-semibold font-mono text-sm">ANALYSIS HISTORY</h2>
         <span className="text-[10px] font-mono text-muted-foreground bg-secondary/50 px-1.5 py-0.5 rounded">
           {history.length}
         </span>
@@ -155,6 +155,7 @@ export function HistoryPanel({ onLoad, onCompare, refreshKey }: HistoryPanelProp
                 </Button>
                 <button
                   onClick={(e) => { e.stopPropagation(); handleDelete(record.id); }}
+                  aria-label={`Delete ${record.ticker} analysis`}
                   className="p-1 rounded hover:bg-destructive/20 text-muted-foreground hover:text-destructive transition-colors"
                 >
                   <X className="h-3 w-3" />

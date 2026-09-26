@@ -1,3 +1,4 @@
+import { Seo } from "@/components/Seo";
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -87,6 +88,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background terminal-grid">
+      <Seo title="StockOracle - AI Stock Prediction & Investment Advice" description="Predict stock trends with AI, scan the latest news, and get buy/sell advice in rupees for NSE and US stocks." path="/" />
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <header className="mb-8 animate-fade-in-up">
@@ -95,6 +97,7 @@ const Index = () => {
               <Activity className="h-7 w-7 text-primary" />
               <h1 className="text-2xl font-bold font-mono tracking-tight">
                 STOCK<span className="text-primary">ORACLE</span>
+                <span className="sr-only"> — AI-Powered Stock Analysis</span>
               </h1>
               <span className="text-[10px] font-mono text-muted-foreground bg-secondary/50 px-2 py-0.5 rounded">v1.0</span>
             </div>

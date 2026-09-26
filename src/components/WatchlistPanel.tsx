@@ -82,7 +82,7 @@ export function WatchlistPanel({ onAnalyze, currentTicker, currentCompany, curre
       <div className="glass-card p-6 animate-fade-in-up">
         <div className="flex items-center gap-2 mb-4">
           <Star className="h-5 w-5 text-signal-neutral" />
-          <h3 className="font-semibold font-mono text-sm">WATCHLIST</h3>
+          <h2 className="font-semibold font-mono text-sm">WATCHLIST</h2>
         </div>
         <div className="text-center py-8">
           <Star className="h-10 w-10 text-muted-foreground/30 mx-auto mb-3" />
@@ -104,7 +104,7 @@ export function WatchlistPanel({ onAnalyze, currentTicker, currentCompany, curre
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Star className="h-5 w-5 text-signal-neutral" />
-          <h3 className="font-semibold font-mono text-sm">WATCHLIST</h3>
+          <h2 className="font-semibold font-mono text-sm">WATCHLIST</h2>
           <span className="text-[10px] font-mono text-muted-foreground bg-secondary/50 px-1.5 py-0.5 rounded">
             {items.length}
           </span>
@@ -127,6 +127,7 @@ export function WatchlistPanel({ onAnalyze, currentTicker, currentCompany, curre
           )}
           <button
             onClick={fetchWatchlist}
+            aria-label="Refresh watchlist"
             disabled={loading}
             className="p-1.5 rounded-md hover:bg-muted/50 transition-colors text-muted-foreground"
           >
@@ -169,6 +170,7 @@ export function WatchlistPanel({ onAnalyze, currentTicker, currentCompany, curre
                   onClick={() => onAnalyze(item.ticker)}
                   className="p-1 rounded hover:bg-primary/10 text-primary transition-colors"
                   title="Analyze"
+                  aria-label={`Analyze ${item.ticker}`}
                 >
                   <TrendingUp className="h-3.5 w-3.5" />
                 </button>
@@ -176,6 +178,7 @@ export function WatchlistPanel({ onAnalyze, currentTicker, currentCompany, curre
                   onClick={() => removeFromWatchlist(item.id, item.ticker)}
                   className="p-1 rounded hover:bg-destructive/10 text-destructive transition-colors"
                   title="Remove"
+                  aria-label={`Remove ${item.ticker} from watchlist`}
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>

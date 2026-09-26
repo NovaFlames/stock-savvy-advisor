@@ -37,13 +37,13 @@ export function PredictionPanel({ prediction }: PredictionPanelProps) {
     <div className={`glass-card p-6 animate-fade-in-up ${trendGlow}`}>
       <div className="flex items-center gap-2 mb-4">
         <Activity className="h-5 w-5 text-accent" />
-        <h3 className="font-semibold font-mono text-sm">PREDICTION MODEL</h3>
+        <h2 className="font-semibold font-mono text-sm">PREDICTION MODEL</h2>
       </div>
 
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-bold font-mono">{prediction.ticker}</h2>
+          <h3 className="text-2xl font-bold font-mono">{prediction.ticker}</h3>
           <p className="text-sm text-muted-foreground">{prediction.company_name}</p>
         </div>
         <div className="text-right">
