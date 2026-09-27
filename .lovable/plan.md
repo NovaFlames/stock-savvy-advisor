@@ -4,7 +4,7 @@
 Make the searched stock's future direction immediately understandable with a clear projected price chart.
 
 ## Changes
-- Upgrade the existing forecast visualization from percentage-only plotting to a price-path chart anchored at the stock's current price.
+- Upgrade the existing forecast visualization to percentage-only plotting and a price-path chart anchored at the stock's current price.
 - Show the current price as the starting point, followed by each forecast timeframe in chronological order.
 - Display projected price, expected percentage change, direction, and model confidence in the chart tooltip.
 - Add a compact bullish/bearish/neutral trend summary and projected range above the chart.
