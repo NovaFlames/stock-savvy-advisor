@@ -183,8 +183,11 @@ const Index = () => {
               Enter a stock ticker to begin analysis
             </p>
             <p className="text-muted-foreground/50 text-xs mt-2">
-              The AI pipeline will predict trends, scan news, and provide investment advice
-            </p>
+            The AI pipeline will predict trends, scan news, and provide investment advice
+          </p>
+          <a href="/ai-stocks-india" className="inline-block text-xs text-primary hover:underline font-mono mt-4">
+            Researching AI stocks in India? See how StockOracle works →
+          </a>
           </div>
         )}
       </div>
