@@ -1,73 +1,78 @@
-# Welcome to your Lovable project
+# StockOracle
 
-## Project info
+AI-powered stock research for NSE and US tickers. StockOracle combines trend forecasts, market news, and an AI-generated advisory in one browser-based dashboard.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Features
 
-## How can I edit this code?
+- **Stock forecasts:** Explore projected trends across 1-week, 1-month, and 3-month horizons. Visualizations should support both percentage change and projected prices anchored to the current price, so users can review relative performance and rupee-denominated forecasts.
+- **News intelligence:** Review recent stock-related news and sentiment.
+- **AI advisory:** Get an analysis with entry, target, stop-loss, and position guidance.
+- **Research tools:** Keep a watchlist, revisit saved analyses, and compare past analyses.
+- **Authentication:** Sign in to access account features.
 
-There are several ways of editing your application.
+> **Disclaimer:** StockOracle provides AI-generated research for informational purposes only. Forecasts are estimates, not guarantees, and are not financial advice. Consult a qualified financial professional before making investment decisions.
 
-**Use Lovable**
+## Technology
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
+- React 18 and TypeScript
 - Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- Tailwind CSS and shadcn/ui (Radix UI)
+- Supabase (authentication and Edge Functions)
+- TanStack Query and Recharts
 
-## How can I deploy this project?
+## Getting started
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+### Prerequisites
 
-## Can I connect a custom domain to my Lovable project?
+- Node.js and npm
+- A Supabase project configured for this application
 
-Yes, you can!
+### Setup
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. Clone the repository and enter the project directory:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+   ```bash
+   git clone https://github.com/NovaFlames/stock-savvy-advisor.git
+   cd stock-savvy-advisor
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file in the project root and configure your Supabase project values:
+
+   ```dotenv
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+Vite prints the local development URL in the terminal.
+
+## Available scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the development server. |
+| `npm run build` | Create a production build in `dist/`. |
+| `npm run build:dev` | Create a development-mode build. |
+| `npm run preview` | Preview the production build locally. |
+| `npm run lint` | Run ESLint. |
+| `npm test` | Run the test suite once. |
+| `npm run test:watch` | Run tests in watch mode. |
+
+## Backend
+
+The application uses Supabase Edge Functions for stock prediction, news search, and advisory requests. Configure the required Supabase project and function secrets, then deploy the functions in `supabase/functions/` using the [Supabase CLI](https://supabase.com/docs/guides/cli). Keep private API credentials in Supabase secrets; do not expose them in client-side environment variables.
+
+## Production build
+
+Build the frontend with `npm run build`, then deploy the generated `dist/` directory to a static hosting provider. Configure the host to serve the single-page application routes correctly, and ensure the Supabase Edge Functions are deployed and accessible from the production site.
