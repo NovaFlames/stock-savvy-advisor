@@ -2,15 +2,17 @@
 
 AI-powered stock research for NSE and US tickers. StockOracle combines trend forecasts, market news, and an AI-generated advisory in one browser-based dashboard.
 
+**Published app:** [finance-finder-agent.lovable.app](https://finance-finder-agent.lovable.app/)
+
 ## Features
 
-- **Stock forecasts:** Explore projected trends across 1-week, 1-month, and 3-month horizons. Visualizations should support both percentage change and projected prices anchored to the current price, so users can review relative performance and rupee-denominated forecasts.
+- **Stock forecasts:** Explore projected trends across 1-week, 1-month, and 3-month horizons. Visualizations should support both percentage change and projected prices anchored to the current price, s[...]
 - **News intelligence:** Review recent stock-related news and sentiment.
 - **AI advisory:** Get an analysis with entry, target, stop-loss, and position guidance.
 - **Research tools:** Keep a watchlist, revisit saved analyses, and compare past analyses.
 - **Authentication:** Sign in to access account features.
 
-> **Disclaimer:** StockOracle provides AI-generated research for informational purposes only. Forecasts are estimates, not guarantees, and are not financial advice. Consult a qualified financial professional before making investment decisions.
+> **Disclaimer:** StockOracle provides AI-generated research for informational purposes only. Forecasts are estimates, not guarantees, and are not financial advice. Consult a qualified financial profe[...]
 
 ## Technology
 
@@ -71,8 +73,8 @@ Vite prints the local development URL in the terminal.
 
 ## Backend
 
-The application uses Supabase Edge Functions for stock prediction, news search, and advisory requests. Configure the required Supabase project and function secrets, then deploy the functions in `supabase/functions/` using the [Supabase CLI](https://supabase.com/docs/guides/cli). Keep private API credentials in Supabase secrets; do not expose them in client-side environment variables.
+The application uses Supabase Edge Functions for stock prediction, news search, and advisory requests. Configure the required Supabase project and function secrets, then deploy the functions in `supab[...]
 
 ## Production build
 
-Build the frontend with `npm run build`, then deploy the generated `dist/` directory to a static hosting provider. Configure the host to serve the single-page application routes correctly, and ensure the Supabase Edge Functions are deployed and accessible from the production site.
+Build the frontend with `npm run build`, then deploy the generated `dist/` directory to a static hosting provider. Configure the host to serve the single-page application routes correctly, and ensure [...]
